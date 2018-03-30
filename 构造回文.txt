@@ -1,0 +1,35 @@
+#include<string.h>//在线测试网站需要添加string.h才能正常使用strlen，离线不需要
+#include<iostream>
+/*给定一个字符串s，你可以从中删除一些字符，使得剩下的串是一个回文串。如何删除才能使得回文串最长呢？
+输出需要删除的字符个数。*/
+
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int Solution(char *str, vector<vector<int>> &c, int i, int j){
+	if (c[i][j] >= 0) return c[i][j];
+	if (i >= j) return 0;
+	if (str[i] == str[j]){
+		c[i][j] = Solution(str, c, i + 1, j - 1);
+	}
+	else {
+		c[i][j] = min(Solution(str, c, i, j - 1) + 1, Solution(str, c, i + 1, j) + 1);
+	}
+	return c[i][j];
+}
+
+int main(){
+	char str[1000];
+	//在线测试中cin>>str可以正常判断空行
+	//离线调试中ctrl+c视为输入空
+	while (cin >> str){
+		vector<vector<int>> c(strlen(str), vector<int>(strlen(str), -1));
+		for (int i = 0; i < strlen(str); i++){
+			c[i][i] = 0;
+		}
+		Solution(str, c, 0, strlen(str) - 1);
+		cout << c[0][strlen(str) - 1] << endl;;
+	}
+	return 0;
+}
