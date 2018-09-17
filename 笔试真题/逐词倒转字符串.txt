@@ -1,0 +1,52 @@
+#include <string>
+#include <iostream>
+#include <vector>
+using namespace std;
+string rString(string s);
+int  splitStr(string src, string sSplitor, vector<string> &sArray);
+string GetReserver(string src);
+
+int main() {
+	string str;
+	getline(cin, str);
+	cout << GetReserver(str) << endl;
+	system("pause");
+	return 0;
+}
+
+string rString(string s) {
+	//int iLen = strlen(s.c_str());
+	int iLen = s.size();
+	for (int i = 0; i < (iLen / 2); i++) {
+		swap(s[i], s[iLen - i - 1]);
+	}
+	return s;
+}
+int  splitStr(string src, string sSplitor, vector<string> &sArray) {
+	int i = 0, pos;
+	int len = sSplitor.length();
+	sArray.clear();
+	pos = src.find(sSplitor);
+	while (pos > 0) {
+		sArray.push_back(src.substr(0, pos));
+		src = src.substr(pos + len, src.length());
+		pos = src.find(sSplitor);
+	}
+
+	sArray.push_back(src);
+	return sArray.size();
+}
+string GetReserver(string src) {
+	vector<string> str;
+	int iCount = splitStr(src, " ", str);
+	for (size_t i = 0; i < str.size(); i++) {
+		str[i] = rString(str[i]);
+	}
+	string sResult = "";
+	for (size_t i = 0; i < str.size(); i++) {
+		sResult += str[i];
+		if (i != str.size() - 1)
+			sResult += " ";
+	}
+	return sResult;
+}
