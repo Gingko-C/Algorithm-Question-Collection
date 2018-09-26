@@ -1,0 +1,27 @@
+#include <iostream>
+#include <string> 
+#include <vector>
+#include <sstream>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+	int n, m;
+	string s;
+	getline(cin, s);
+	istringstream input(s);
+	vector<int> v;
+	while (input >> n) {
+		v.push_back(n);
+	}
+	m = v.back();
+	v.pop_back();
+	sort(v.begin(), v.end());
+	for (int i = 0; i < m; i++) {
+		if (i != 0) cout << " ";
+		cout << v[i];
+	}
+	cout << endl;
+	return 0;
+}
